@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: ./backend
+    container_name: moisture-sim-api
+    env_file: [.env]
+    expose: ['8001']
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          "python - <<'PY'\nimport urllib.request,sys\ntry:\n  sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=3).status==200 else 1)\nexcept Exception:\n  sys.exit(1)\nPY",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  web:
+    build:
+      context: ./frontend
+    container_name: moisture-sim-web
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - '8080:80'
