@@ -41,7 +41,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-package-lock.json
+# package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
@@ -66,6 +66,6 @@ data/
 # ------------------------
 # Misc
 # ------------------------
-*.env
-.env.*
-!env.example
+# *.env
+# .env.*
+# !env.example
